@@ -45,10 +45,32 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     bootstrapAsync();
   }, []);
 
+  useEffect(() => {
+    const configInterceptor = () => {
+      axios.defaults.baseURL = "http://localhost:6969/api";
+      
+      if(userToken) {
+        axios.defaults.headers.common.Authorization = `Bearer ${userToken}`;
+      }
+
+      axios.interceptors.response.use(
+        response => response,
+        error => {
+          if (error.response.status === 401) {
+            logout();
+          }
+          return Promise.reject(error);
+        }
+      )
+    }
+
+    configInterceptor();
+  }, [userToken])
+
   const login = async (email: string, password: string) => {
     try {
       setIsLoading(true);
-      const response = await axios.post(`${API_URL}/auth/login`, {
+      const response = await axios.post(`/auth/login`, {
         email,
         password,
       });
@@ -70,7 +92,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const register = async (name: string, email: string, password: string) => {
     try {
       setIsLoading(true);
-      const response = await axios.post(`${API_URL}/auth/register`, {
+      const response = await axios.post(`/auth/register`, {
         name,
         email,
         password,

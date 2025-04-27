@@ -5,8 +5,6 @@ import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { Hospital, Service } from '../../types';
 
-const API_URL = 'http://localhost:6969/api';
-
 const HospitalDetailScreen = ({ route, navigation }) => {
   const { hospitalId } = route.params;
   const [hospital, setHospital] = useState<Hospital>();
@@ -22,12 +20,12 @@ const HospitalDetailScreen = ({ route, navigation }) => {
   const fetchHospitalDetails = async () => {
     try {
       setLoading(true);
-      const hospitalResponse = await axios.get(`${API_URL}/hospitals/${hospitalId}`, {
+      const hospitalResponse = await axios.get(`/hospitals/${hospitalId}`, {
         headers: { Authorization: `Bearer ${userToken}` }
       });
       setHospital(hospitalResponse.data);
 
-      const servicesResponse = await axios.get(`${API_URL}/services/hospital/${hospitalId}`, {
+      const servicesResponse = await axios.get(`/services/hospital/${hospitalId}`, {
         headers: { Authorization: `Bearer ${userToken}` }
       });
       setServices(servicesResponse.data);

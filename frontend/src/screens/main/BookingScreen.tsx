@@ -5,8 +5,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 
-const API_URL = 'http://localhost:6969/api';
-
 const BookingScreen = ({ route, navigation }) => {
   const { serviceId, serviceName, hospitalName } = route.params;
   const [date, setDate] = useState(new Date());
@@ -30,8 +28,8 @@ const BookingScreen = ({ route, navigation }) => {
       
       const formattedDate = date.toISOString();
       
-      const response = await axios.post(
-        `${API_URL}/bookings`,
+      await axios.post(
+        `/bookings`,
         {
           serviceId,
           date: formattedDate,
@@ -41,11 +39,12 @@ const BookingScreen = ({ route, navigation }) => {
           headers: { Authorization: `Bearer ${userToken}` }
         }
       );
+
+      navigation.navigate('Bookings')
       
       Alert.alert(
         'Success',
-        'Your appointment has been booked successfully!',
-        [{ text: 'OK', onPress: () => navigation.navigate('Bookings') }]
+        'Your appointment has been booked successfully!'
       );
     } catch (error) {
       const message = error.response?.data?.message || 'Booking failed. Please try again.';

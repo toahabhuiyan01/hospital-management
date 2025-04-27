@@ -4,8 +4,6 @@ import { Card, Title, Paragraph, Button, Text, Chip } from 'react-native-paper';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 
-const API_URL = 'http://localhost:6969/api';
-
 const BookingsListScreen = ({ navigation }) => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +23,7 @@ const BookingsListScreen = ({ navigation }) => {
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API_URL}/bookings`, {
+      const response = await axios.get(`/bookings`, {
         headers: { Authorization: `Bearer ${userToken}` }
       });
       setBookings(response.data);
@@ -60,7 +58,7 @@ const BookingsListScreen = ({ navigation }) => {
     try {
       setLoading(true);
       await axios.patch(
-        `${API_URL}/bookings/${bookingId}/status`,
+        `/bookings/${bookingId}`,
         { status: 'cancelled'},
         {
           headers: { Authorization: `Bearer ${userToken}` }

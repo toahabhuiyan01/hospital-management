@@ -36,7 +36,6 @@ A full-stack application for booking hospital appointments with a React Native f
 #### Bookings
 - `POST /api/bookings`: Create a new booking (protected)
 - `GET /api/bookings`: Get user's bookings (protected)
-- `GET /api/bookings/:id`: Get booking by ID (protected)
 - `PUT /api/bookings/:id`: Update booking status, or maybe rescheduling and other for later (protected)
 
 ### Setup Instructions
@@ -66,7 +65,7 @@ A full-stack application for booking hospital appointments with a React Native f
    ```
    NODE_ENV=development
    PORT=6969
-   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/hospital_booking"
+   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/hospital_management"
    JWT_SECRET=your_jwt_secret_key
    ```
 
@@ -81,13 +80,53 @@ A full-stack application for booking hospital appointments with a React Native f
    npm run dev
    ```
 
-## Frontend (To be implemented)
+## Frontend
+### Technologies Used
+- React Native (Expo) : Cross-platform mobile framework
+- React Navigation : For screen navigation
+- React Native Paper : UI component library
+- Axios : For API requests
+- AsyncStorage : For local data persistence
+- DateTimePicker : For appointment scheduling
 
-The frontend will be a React Native (Expo) application with the following features:
-- User authentication
-- Hospital listing
-- Service selection
-- Appointment booking
+### Features User Authentication
+- Login and registration functionality
+- JWT token-based authentication
+- Secure storage of authentication state
+- Form validation for user inputs
+
+### Hospital Listing
+- View a comprehensive list of available hospitals
+- Search functionality to find specific hospitals
+- Hospital details including address and contact information
+- Clean and intuitive UI for browsing hospitals Service Selection
+- Browse services offered by each hospital
+- View service details including price and duration
+- Filter services by category or type
+- Select services for appointment booking
+
+### Service Selection
+- Browse services offered by each hospital
+- View service details including price and duration
+- Filter services by category or type
+- Select services for appointment booking Appointment Booking
+- Interactive calendar for date selection
+- Time slot selection for appointments
+- Booking confirmation process
+- View booking history and current status
+- Cancel or reschedule existing bookings
+
+### Setup Instructions
+1. Install dependencies:
+
+```
+cd frontend
+npm install
+```
+2. Start the development server:
+```
+npm run web
+```
 
 ## Design Decisions
 
@@ -97,9 +136,21 @@ The frontend will be a React Native (Expo) application with the following featur
 - **JWT Authentication**: Secure, stateless authentication for API endpoints
 - **Zod Validation**: Runtime validation for request data
 
+### Frontend
+- React Native : Enables cross-platform development with a single codebase
+- Context API : For global state management
+- Component-based architecture : For reusable UI elements
+- Responsive design : Adapts to different screen sizes
+
 ### Database Schema
 - **User**: Stores user information and authentication details
 - **Hospital**: Contains hospital information
 - **Service**: Represents services offered by hospitals
 - **Booking**: Manages appointment bookings between users and services
 
+## Data Seeding
+The application includes a seed script to populate the database with initial data:
+
+- Multiple hospitals with realistic names and addresses
+- Various medical services with appropriate pricing
+- Run using npm run seed from the backend directory
