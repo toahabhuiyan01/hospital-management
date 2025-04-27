@@ -24,11 +24,11 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
+const API_URL = 'http://localhost:6969/api';
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [userToken, setUserToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  const API_URL = 'http://localhost:6969/api';
 
   useEffect(() => {
     const bootstrapAsync = async () => {
@@ -47,7 +47,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const configInterceptor = () => {
-      axios.defaults.baseURL = "http://localhost:6969/api";
+      axios.defaults.baseURL = API_URL;
       
       if(userToken) {
         axios.defaults.headers.common.Authorization = `Bearer ${userToken}`;

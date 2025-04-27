@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
-import { Card, Title, Paragraph, Button, List, Divider, Text } from 'react-native-paper';
+import { Card, Title, Paragraph, Button, Text } from 'react-native-paper';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { Hospital, Service } from '../../types';
