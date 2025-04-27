@@ -101,20 +101,14 @@ A full-stack application for booking hospital appointments with a React Native f
 - Hospital details including address and contact information
 - Clean and intuitive UI for browsing hospitals Service Selection
 - Browse services offered by each hospital
-- View service details including price and duration
-- Filter services by category or type
-- Select services for appointment booking
 
 ### Service Selection
 - Browse services offered by each hospital
 - View service details including price and duration
-- Filter services by category or type
 - Select services for appointment booking Appointment Booking
 - Interactive calendar for date selection
 - Time slot selection for appointments
-- Booking confirmation process
-- View booking history and current status
-- Cancel or reschedule existing bookings
+- Booking Cancelation
 
 ### Setup Instructions
 1. Install dependencies:
