@@ -41,7 +41,19 @@ A full-stack application for booking hospital appointments with a React Native f
 
 ### Setup Instructions
 
-1. Install dependencies:
+1. Initiate database on docker:
+   ```
+   docker run -d \
+      --name my-postgres-db \
+      -e POSTGRES_USER=postgres \
+      -e POSTGRES_PASSWORD=postgres \
+      -e POSTGRES_DB=hospital_management \
+      -p 5432:5432 \
+      -v pgdata:/var/lib/postgresql/data \
+      postgres:14.1-alpine
+   ```   
+
+2. Install dependencies:
    ```
    cd backend
    npm install
@@ -49,7 +61,7 @@ A full-stack application for booking hospital appointments with a React Native f
    npm run dev
    ```
 
-2. Set up environment variables:
+3. Set up environment variables:
    Create a `.env` file in the backend directory with the following variables:
    ```
    NODE_ENV=development
@@ -58,13 +70,13 @@ A full-stack application for booking hospital appointments with a React Native f
    JWT_SECRET=your_jwt_secret_key
    ```
 
-3. Set up the database:
+4. Set up the database:
    ```
    npx prisma migrate dev --name init
    npx prisma generate
    ```
 
-4. Start the development server:
+5. Start the development server:
    ```
    npm run dev
    ```

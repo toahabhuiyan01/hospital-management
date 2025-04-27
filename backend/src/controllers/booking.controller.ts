@@ -107,15 +107,11 @@ export const updateBookingStatus = async (req: Request, res: Response) => {
     }
 
     const booking = await prisma.booking.findUnique({
-      where: { id },
+      where: { id, userId: req.user.id },
     });
 
     if (!booking) {
       return res.status(404).json({ message: 'Booking not found' });
-    }
-
-    if (booking.userId !== req.user.id) {
-      return res.status(403).json({ message: 'Not authorized to update this booking' });
     }
 
     const updatedBooking = await prisma.booking.update({
