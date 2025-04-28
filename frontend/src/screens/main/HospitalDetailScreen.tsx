@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { Card, Title, Paragraph, Button, Text } from 'react-native-paper';
 import axios from 'axios';
-import { useAuth } from '../../context/AuthContext';
 import { Hospital, Service } from '../../types';
 
 const HospitalDetailScreen = ({ route, navigation }) => {
@@ -11,7 +10,6 @@ const HospitalDetailScreen = ({ route, navigation }) => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const { userToken } = useAuth();
 
   useEffect(() => {
     fetchHospitalDetails();
@@ -20,14 +18,10 @@ const HospitalDetailScreen = ({ route, navigation }) => {
   const fetchHospitalDetails = async () => {
     try {
       setLoading(true);
-      const hospitalResponse = await axios.get(`/hospitals/${hospitalId}`, {
-        headers: { Authorization: `Bearer ${userToken}` }
-      });
+      const hospitalResponse = await axios.get(`/hospitals/${hospitalId}`);
       setHospital(hospitalResponse.data);
 
-      const servicesResponse = await axios.get(`/services/hospital/${hospitalId}`, {
-        headers: { Authorization: `Bearer ${userToken}` }
-      });
+      const servicesResponse = await axios.get(`/services/hospital/${hospitalId}`);
       setServices(servicesResponse.data);
       setError('');
     } catch (err) {

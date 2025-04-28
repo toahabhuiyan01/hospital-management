@@ -34,9 +34,6 @@ const BookingScreen = ({ route, navigation }) => {
           serviceId,
           date: formattedDate,
           notes
-        },
-        {
-          headers: { Authorization: `Bearer ${userToken}` }
         }
       );
 

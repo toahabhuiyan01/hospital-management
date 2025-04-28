@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { Card, Title, Paragraph, Button, Searchbar } from 'react-native-paper';
 import axios from 'axios';
-import { useAuth } from '../../context/AuthContext';
 import { Hospital } from '../../types';
 
 const HospitalListScreen = ({ navigation }) => {
@@ -10,7 +9,6 @@ const HospitalListScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const { userToken } = useAuth();
 
   useEffect(() => {
     fetchHospitals();
@@ -19,9 +17,7 @@ const HospitalListScreen = ({ navigation }) => {
   const fetchHospitals = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`/hospitals`, {
-        headers: { Authorization: `Bearer ${userToken}` }
-      });
+      const response = await axios.get(`/hospitals`);
       setHospitals(response.data);
       setError('');
     } catch (err) {

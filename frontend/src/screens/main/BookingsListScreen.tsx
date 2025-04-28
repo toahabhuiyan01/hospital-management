@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { Card, Title, Paragraph, Button, Text, Chip } from 'react-native-paper';
 import axios from 'axios';
-import { useAuth } from '../../context/AuthContext';
 
 const BookingsListScreen = ({ navigation }) => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const { userToken } = useAuth();
 
   useEffect(() => {
     fetchBookings();
@@ -23,9 +21,7 @@ const BookingsListScreen = ({ navigation }) => {
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`/bookings`, {
-        headers: { Authorization: `Bearer ${userToken}` }
-      });
+      const response = await axios.get(`/bookings`);
       setBookings(response.data);
       setError('');
     } catch (err) {
@@ -59,10 +55,7 @@ const BookingsListScreen = ({ navigation }) => {
       setLoading(true);
       await axios.patch(
         `/bookings/${bookingId}`,
-        { status: 'cancelled'},
-        {
-          headers: { Authorization: `Bearer ${userToken}` }
-        }
+        { status: 'cancelled'}
       );
       
       setBookings(prev => {
