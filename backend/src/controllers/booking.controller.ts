@@ -38,6 +38,7 @@ export const createBooking = async (req: Request, res: Response) => {
             duration: true,
             hospital: {
               select: {
+                id: true,
                 name: true,
                 address: true,
               },
@@ -137,3 +138,26 @@ export const updateBookingStatus = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Server error while updating booking status' });
   }
 };
+
+export const getBookingByHospital = async (req: Request, res: Response) => {
+  try {
+    const { hospitalId } = req.params;
+    const bookings = await prisma.booking.findMany({
+      where: {
+        userId: req.user.id,
+        service: {
+          hospital: {
+            id: hospitalId
+          }
+        }
+      }
+    })
+
+    res.json(bookings)
+  }
+
+  catch (error) {
+    console.error('Error fetching bookings:', error);
+    res.status(500).json({ message: 'Server error while fetching bookings' });
+  }
+}
