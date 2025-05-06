@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({ log: ['query', "info"] });
 
 const bookingSchema = z.object({
   serviceId: z.string().uuid('Invalid service ID format'),
@@ -150,6 +150,25 @@ export const getBookingByHospital = async (req: Request, res: Response) => {
             id: hospitalId
           }
         }
+      },
+      include: {
+        service: {
+          select: {
+            name: true,
+            price: true,
+            duration: true
+          }
+        },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true
+          }
+        }
+      },
+      orderBy: {
+        date: 'desc'
       }
     })
 
